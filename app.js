@@ -5,6 +5,22 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
+var mongoose = require('mongoose');
+mongoose.Promise = global.Promise;
+var connection = mongoose.connect("mongodb://tatooine.mongodb.umbler.com:50444/mobstudiodb", {
+  useMongoClient: true,
+  authSource: "mobstudiodb",
+  db: { databaseName: "mobstudiodb" },
+  user: "mobuser",
+  pass: "M0bUser2017"
+});
+
+connection.on('error', function (err) { console.log(err); });
+//connection.on('open', function (err) { console.log(connection); });
+
+var Cliente = require('./models/clienteModel');
+var clienteRoutes = require('./routes/clienteRoutes');
+
 var index = require('./routes/index');
 var users = require('./routes/users');
 
@@ -23,7 +39,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
-app.use('/users', users);
+clienteRoutes(app);
+
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
