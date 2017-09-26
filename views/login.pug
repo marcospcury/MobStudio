@@ -1,0 +1,16 @@
+extends layout
+block header
+    link(rel='stylesheet', href='/stylesheets/login.css')
+
+block content
+    div(class="container")
+        form(class="form-signin")
+            h2(class="form-signin-heading") Login
+            label(for="inputEmail", class="sr-only") Email
+            input(type="email", id="inputEmail", class="form-control", placeholder="Endereço de email")
+            label(for="inputPassword", class="sr-only") Senha
+            input(type="password", id="inputPassword", class="form-control", placeholder="Senha")
+            div(class="checkbox")
+                label
+                    input(type="checkbox", value="Lembrar acesso")
+            button(class="btn btn-primary btn-block", type="submit") Entrar
