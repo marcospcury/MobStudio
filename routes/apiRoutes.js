@@ -1,7 +1,7 @@
 'use strict';
 module.exports = function(app) {
     var cliente = require('../controllers/clienteController');
-
+    
     app.route('/api/clientes')
         .get(cliente.listar_todos)
         .post(cliente.criar_cliente);
@@ -9,5 +9,5 @@ module.exports = function(app) {
     app.route('/api/clientes/:clienteId')
         .get(cliente.obter_cliente)
         .put(cliente.alterar_cliente)
-        .delete(cliente.remover_cliente);    
-};
+        .delete(cliente.remover_cliente);
+}

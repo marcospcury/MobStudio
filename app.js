@@ -4,6 +4,7 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var checkAuth = require('./utils/checkAuth');
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -19,10 +20,8 @@ connection.on('error', function (err) { console.log(err); });
 //connection.on('open', function (err) { console.log(connection); });
 
 var Cliente = require('./models/clienteModel');
-var clienteRoutes = require('./routes/clienteRoutes');
-
-var index = require('./routes/index');
-var users = require('./routes/users');
+var appRoutes = require('./routes/appRoutes');
+var apiRoutes = require('./routes/apiRoutes');
 
 var app = express();
 
@@ -36,11 +35,10 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+app.use(checkAuth);
 app.use(express.static(path.join(__dirname, 'public')));
-
-app.use('/', index);
-clienteRoutes(app);
-
+apiRoutes(app);
+appRoutes(app);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
