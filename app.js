@@ -9,15 +9,14 @@ var passport = require('passport');
 var session = require('express-session');
 var flash = require('express-flash');
 
-
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
-var connection = mongoose.connect("mongodb://tatooine.mongodb.umbler.com:50444/mobstudiodb", {
+var connection = mongoose.connect(process.env.MOB_DB_PATH, {
   useMongoClient: true,
-  authSource: "mobstudiodb",
-  db: { databaseName: "mobstudiodb" },
-  user: "mobuser",
-  pass: "M0bUser2017"
+  authSource: process.env.MOB_AUTH_SOURCE,
+  db: { databaseName: process.env.MOB_DB_NAME },
+  user: process.env.MOB_DB_USER,
+  pass: process.env.MOB_DB_PASSWORD
 });
 
 connection.on('error', function (err) { console.log(err); });
@@ -45,8 +44,8 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(session({ 
   cookie: { maxAge: 60000 },
-  key: "app.mob.studio",
-  secret: "mobstudiosecret"
+  key: process.env.MOB_SESSION_KEY,
+  secret: process.env.MOB_SESSION_SECRET
 }));
 
 app.use(passport.initialize());

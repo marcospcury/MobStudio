@@ -25,7 +25,7 @@ exports.post_registro = (req, res) => {
     let errors = [];
 
     if(req.body.password != req.body.password_confirm) {
-        errors.push({text: "Senhas não combinam"});
+        errors.push({ text: "Senhas não combinam" });
     }
     
     if(errors.length > 0) {

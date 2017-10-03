@@ -1,48 +1,54 @@
 'use strict';
+const mongoose = require('mongoose');
+const Cliente = mongoose.model('Clientes');
 
-var mongoose = require('mongoose');
-var Cliente = mongoose.model('Clientes');
-
-exports.listar_todos = function(req, res) {
-    Cliente.find({}, function(err, cliente){
-        if(err)
-            res.send(err);
-        res.json(cliente);
-    });
-};
-
-exports.criar_cliente = function(req, res) {
-    var novo_cliente = new Cliente(req.body);
-    novo_cliente.save(function(err, cliente) {
-        if(err) {
-            res.send(err);
-        }
-        else {
+exports.listar_todos = (req, res) => {
+    Cliente.find({})
+        .then(cliente => {
             res.json(cliente);
-        }
-    });
+        })
+        .catch(err => {
+            res.send(err);
+        });
 };
 
-exports.obter_cliente = function(req, res) {
-    Cliente.findById(req.params.clienteId, function(err, cliente) {
-        if(err)
+exports.criar_cliente = (req, res) => {
+    var novo_cliente = new Cliente(req.body);
+    novo_cliente.save()
+        .then(cliente => {
+            res.json(cliente);
+        })
+        .catch(err => {
             res.send(err);
-        res.json(cliente);
-    });
+        });
 };
 
-exports.alterar_cliente = function(req, res) {
-    Cliente.findOneAndUpdate({ _id: req.params.clienteId }, req.body, { new: true }, function(err, cliente) {
-        if(err)
+exports.obter_cliente = (req, res) => {
+    Cliente.findById(req.params.clienteId)
+        .then(cliente => {
+            res.json(cliente);
+        })
+        .catch(err => {
             res.send(err);
-        res.json(cliente);
-    });
+        })
+};
+
+exports.alterar_cliente = (req, res) => {
+    Cliente.findOneAndUpdate({ _id: req.params.clienteId }, req.body, { new: true })
+        .then(cliente => {
+            res.json(cliente);    
+        })
+        .catch(err => {
+            res.send(err);
+        });
 };
 
 exports.remover_cliente = function(req, res) {
-    Cliente.remove({ _id: req.params.clienteId }, function(err, cliente) {
-        if(err)
+    Cliente.remove({ _id: req.params.clienteId })
+        .then(cliente => { 
+            res.json({ msg_erro: 'Cliente excluído com sucesso' });
+        })
+        .catch(err => {
             res.send(err);
-        res.json({ message: 'Cliente excluído com sucesso' });
-    });
+        });
 };
