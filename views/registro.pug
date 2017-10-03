@@ -1,0 +1,24 @@
+extends layout
+block header
+    link(rel='stylesheet', href='/stylesheets/login.css')
+
+block content
+    div(class="container")
+        if errors
+            each error in errors
+                div(class="alert alert-danger")= error.text
+        form(class="form-signin" action="" method="post")
+            h2(class="form-signin-heading") Registro de usuário
+            div(class="form-group")
+                label(for="input-nome", class="sr-only") Nome
+                input(type="text", name="nome", class="form-control", placeholder="Nome do usuário" value=nome)
+            div(class="form-group")
+                label(for="input-email", class="sr-only") Nome
+                input(type="email", name="email", class="form-control", placeholder="Endereço de email" value=email)
+            div(class="form-group")
+                label(for="input-password", class="sr-only") Senha
+                input(type="password", name="password", class="form-control", placeholder="Senha" value=password)
+            div(class="form-group")
+                label(for="input-password-confirm", class="sr-only") Confirmar senha
+                input(type="password", name="password_confirm", class="form-control", placeholder="Confirmar senha" value=password_confirm)
+            button(class="btn btn-primary btn-block", type="submit") Registrar

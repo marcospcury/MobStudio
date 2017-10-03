@@ -1,6 +1,10 @@
-module.exports = function(req, res, next) {
-    if(!req.session || !req.session.authenticated){
-        res.render('login');
+module.exports = {
+    checkAuth: function(req, res, next) {
+        if(req.isAuthenticated()) {
+            return next();
+        } else {
+            req.flash('msg_erro', 'Não autorizado');
+            res.redirect('/login');
+        }
     }
-    next();
 }

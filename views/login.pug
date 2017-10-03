@@ -4,13 +4,16 @@ block header
 
 block content
     div(class="container")
-        form(class="form-signin")
+        if error && error != ""
+            div(class="alert alert-danger")= error
+        form(class="form-signin" action="" method="post")
             h2(class="form-signin-heading") Login
-            label(for="inputEmail", class="sr-only") Email
-            input(type="email", id="inputEmail", class="form-control", placeholder="Endereço de email")
-            label(for="inputPassword", class="sr-only") Senha
-            input(type="password", id="inputPassword", class="form-control", placeholder="Senha")
-            div(class="checkbox")
-                label
-                    input(type="checkbox", value="Lembrar acesso")
+            div(class="form-group")
+                label(for="input-email", class="sr-only") Email
+                input(type="email", name="email", class="form-control", placeholder="Endereço de email" value=email)
+            div(class="form-group")
+                label(for="input-password", class="sr-only") Senha
+                input(type="password", name="password", class="form-control", placeholder="Senha" value=password)
+            div(class="form-group")
+                a(href='/registro') Ainda não é registrado?
             button(class="btn btn-primary btn-block", type="submit") Entrar

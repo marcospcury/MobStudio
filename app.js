@@ -5,6 +5,10 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var checkAuth = require('./utils/checkAuth');
+var passport = require('passport');
+var session = require('express-session');
+var flash = require('express-flash');
+
 
 var mongoose = require('mongoose');
 mongoose.Promise = global.Promise;
@@ -20,8 +24,11 @@ connection.on('error', function (err) { console.log(err); });
 //connection.on('open', function (err) { console.log(connection); });
 
 var Cliente = require('./models/clienteModel');
+var Usuario = require('./models/usuarioModel');
 var appRoutes = require('./routes/appRoutes');
 var apiRoutes = require('./routes/apiRoutes');
+
+require('./config/passport')(passport);
 
 var app = express();
 
@@ -35,8 +42,25 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(checkAuth);
 app.use(express.static(path.join(__dirname, 'public')));
+app.use(session({ 
+  cookie: { maxAge: 60000 },
+  key: "app.mob.studio",
+  secret: "mobstudiosecret"
+}));
+
+app.use(passport.initialize());
+app.use(passport.session());
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.msg_sucesso = req.flash('msg_sucesso');
+  res.locals.msg_erro = req.flash('msg_erro');
+  res.locals.error = req.flash('error');
+  res.locals.user = req.user || null;
+  next();
+});
+
 apiRoutes(app);
 appRoutes(app);
 

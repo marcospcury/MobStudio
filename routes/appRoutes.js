@@ -1,4 +1,6 @@
 'use strict';
+const {checkAuth} = require('../utils/checkAuth');
+
 module.exports = function(app) {
     var login = require('../controllers/loginController');
 
@@ -6,7 +8,11 @@ module.exports = function(app) {
         .get(login.get_login)
         .post(login.post_login);
         
-    app.route('/').get(function(req, res){
-        res.render('index', { title: 'Express' });
+    app.route('/registro')
+        .get(login.get_registro)
+        .post(login.post_registro);
+        
+    app.route('/').get(checkAuth, (req, res) => {
+        res.render('index');
     });
 };
