@@ -1,0 +1,21 @@
+nav(class="navbar navbar-expand-md navbar-dark bg-dark fixed-top")
+    a(class="navbar-brand", href="/") Mob Studio
+    button(class="navbar-toggler", type="button", data-toggle="collapse", data-target="#navbarsExampleDefault", aria-controls="navbarsExampleDefault", aria-expanded="false", aria-label="Toggle navigation")
+        span(class="navbar-toggler-icon")
+
+    div(class="collapse navbar-collapse", id="navbarsExampleDefault")
+        ul(class="navbar-nav mr-auto")
+            li(class="nav-item")
+                a(href="/", class="nav-link") Home
+            li(class="nav-item dropdown")
+                a(href="#", class="nav-link dropdown-toggle", data-toggle="dropdown", id="dropdown-cadastros") Cadastros
+                div(class="dropdown-menu", aria-labelledby="dropdown-cadastros")
+                    a(class="dropdown-item", href="/cadastro/clientes") Clientes
+                    a(class="dropdown-item", href="/cadastro/produtos") Produtos
+                    a(class="dropdown-item", href="/cadastro/servicos") Serviços
+            li(class="nav-item dropdown")
+                a(href="#", class="nav-link dropdown-toggle", data-toggle="dropdown", id="dropdown-projetos") Projetos
+                div(class="dropdown-menu", aria-labelledby="dropdown-projetos")
+                    a(class="dropdown-item", href="/projeto/novo_orcamento") Novo orçamento
+                    a(class="dropdown-item", href="/projeto/em_andamento") Projetos em andamento
+        span(class="navbar-text") Bem vindo, #{user.Nome}

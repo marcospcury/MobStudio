@@ -8,12 +8,14 @@ block content
             div(class="alert alert-danger")= error
         form(class="form-signin" action="" method="post")
             h2(class="form-signin-heading") Login
-            div(class="form-group")
-                label(for="input-email", class="sr-only") Email
+            div(class="input-group margin-bottom-sm")
+                span(class="input-group-addon")
+                    i(class="fa fa-envelope-o fa-fw")
                 input(type="email", name="email", class="form-control", placeholder="Endereço de email" value=email)
-            div(class="form-group")
-                label(for="input-password", class="sr-only") Senha
+            div(class="input-group")
+                span(class="input-group-addon")
+                    i(class="fa fa-key fa-fw")
                 input(type="password", name="password", class="form-control", placeholder="Senha" value=password)
             div(class="form-group")
                 a(href='/registro') Ainda não é registrado?
-            button(class="btn btn-primary btn-block", type="submit") Entrar
+            button(class="btn btn-dark btn-block", type="submit") Entrar

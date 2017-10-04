@@ -15,4 +15,8 @@ module.exports = function(app) {
     app.route('/').get(checkAuth, (req, res) => {
         res.render('index');
     });
+
+    app.route('/cadastro/clientes').get(checkAuth, (req, res) => {
+        res.render('cadastro/clientes');
+    });
 };

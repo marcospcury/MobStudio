@@ -4,7 +4,7 @@ var EnderecoSchema = require('./enderecoModel');
 var Schema = mongoose.Schema;
 
 var ClienteSchema = new Schema({
-    Nome : String,
+    Nome: { type: String, required: true },
     Enderecos: [ { type: EnderecoSchema } ],
     Telefones: {
         Contato: String,
@@ -13,10 +13,9 @@ var ClienteSchema = new Schema({
      },
      Sexo: String,
      Profissao: String,
-     Email: String,
+     Email: { type: String, required: true },
      Estilo: String,
      NomeContato: String,
-     EnderecoObra: { type: EnderecoSchema }
 },
 { bufferCommands: false });
 
