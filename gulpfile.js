@@ -1,22 +1,15 @@
-var gulp = require('gulp');
-var git = require('gulp-git');
+const gulp = require('gulp')
+const util = require('gulp-util')
+const sequence = require('run-sequence')
 
-gulp.task('add', function(){
-    return gulp.src('.')
-        .pipe(git.add());
-});
+require('./build/app')
+require('./build/deps')
+require('./build/server')
 
-gulp.task('commit', function(){
-    return gulp.src('.')
-        .pipe(git.commit('auto commit'));
-});
-
-gulp.task('push', function(){
-    git.push('umbler', 'master', function(err){
-        if(err) {
-            throw err;
-        }
-    });
-});
-
-gulp.task('publish', ['add', 'commit', 'push']);
+gulp.task('default', () => {
+  if(util.env.production) {
+    sequence('deps', 'app')
+  } else {
+    sequence('deps', 'app', 'server')
+  }
+})
