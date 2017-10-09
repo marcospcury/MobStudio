@@ -6,7 +6,8 @@
   "scripts": {
     "test": "mocha",
     "start": "node index.js",
-    "dev": "gulp"
+    "dev": "gulp",
+    "postinstall": "gulp"
   },
   "author": "Marcos Cury (mr-robot.cloud)",
   "license": "MIT",
