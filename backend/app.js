@@ -41,7 +41,8 @@ app.use((req, res, next) => {
   next()
 })
 
-require('./routes/appRoutes')(app)
 require('./routes/apiRoutes')(app)
+require('./routes/appRoutes')(app)
+
 
 module.exports = app

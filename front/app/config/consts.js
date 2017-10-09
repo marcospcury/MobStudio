@@ -4,7 +4,7 @@ angular.module('appMobStudio').constant('consts', {
     owner: 'MrRobot',
     year: '2017',
     site: 'http://mr-robot.cloud',
-    apiUrl: 'http://localhost:3003/api',
+    apiUrl: 'http://localhost:3000/api',
   }).run(['$rootScope', 'consts', function($rootScope, consts) {
     $rootScope.consts = consts
   }])

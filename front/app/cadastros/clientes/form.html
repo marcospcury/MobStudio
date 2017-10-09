@@ -1,0 +1,40 @@
+<div role="form">
+  <div class="box-body">
+    <field id="clienteNome" label="Nome" model="cliente.Nome"
+         placeholder="Informe o nome" grid="12 6 6" readonly="tabDelete"></field>
+    <field id="clienteEmail" label="Email" model="cliente.Email"
+         placeholder="Informe o email" grid="12 6 6" readonly="tabDelete"></field>
+    
+    <field id="clienteContato" label="Nome do Contato" model="cliente.NomeContato"
+         placeholder="Informe a nome do contato" grid="12 6 4" readonly="tabDelete"></field>    
+    <field id="clienteProfissao" label="Profissão" model="cliente.Profissao"
+         placeholder="Informe a profissão" grid="12 6 4" readonly="tabDelete"></field>    
+    <field id="clienteEstilo" label="Estilo" model="cliente.Estilo"
+         placeholder="Informe o estilo" grid="12 6 4" readonly="tabDelete"></field>
+
+    <field id="clienteTelefoneContato" label="Telefone contato" model="cliente.Telefones.Contato"
+         placeholder="Informe o telefone contato" grid="12 6 4" readonly="tabDelete"></field>    
+    <field id="clienteTeleconeCelular" label="Telefone celular" model="cliente.Telefones.Celular"
+         placeholder="Informe o telefone celular" grid="12 6 4" readonly="tabDelete"></field>
+    <field id="clienteTelefoneComercial" label="Telefone comercial" model="cliente.Telefones.Comercial"
+         placeholder="Informe o telefone comercial" grid="12 6 4" readonly="tabDelete"></field>
+    <hr>
+
+    <div class="col-xs-12">
+      <fieldset>
+        <legend>Endereços</legend>
+        <div ng-include="'cadastros/clientes/enderecoList.html'"></div>
+      </fieldset>
+    </div>
+  </div>
+
+  <div class="box-footer">
+    <button class="btn btn-primary" ng-click="createCliente()"
+         ng-if="tabCreate">Incluir</button>
+    <button class="btn btn-info" ng-click="updateCliente()"
+         ng-if="tabUpdate">Alterar</button>
+    <button class="btn btn-danger" ng-click="deleteCliente()"
+         ng-if="tabDelete">Excluir</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+  </div>
+</div>

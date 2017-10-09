@@ -13,6 +13,5 @@ module.exports = () => {
         console.log(err)
     })
     
-    const Cliente = require('../models/clienteModel')
     const Usuario = require('../models/usuarioModel')
 }

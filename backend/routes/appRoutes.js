@@ -15,8 +15,4 @@ module.exports = (app) => {
     app.route('/').get((req, res) => {
         res.render('index')
     })
-
-    app.route('/cadastro/clientes').get((req, res) => {
-        res.render('cadastro/clientes')
-    })
 }

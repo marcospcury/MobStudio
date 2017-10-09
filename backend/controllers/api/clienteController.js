@@ -1,54 +1,36 @@
-'use strict'
-const mongoose = require('mongoose')
-const Cliente = mongoose.model('Clientes')
+const _ = require('lodash')
+const Clientes = require('../../models/clienteModel')
 
-exports.listar_todos = (req, res) => {
-    Cliente.find({})
-        .then(cliente => {
-            res.json(cliente)
-        })
-        .catch(err => {
-            res.send(err)
-        })
+Clientes.methods(['get', 'post', 'put', 'delete'])
+Clientes.updateOptions({new: true, runValidators: true})
+
+Clientes.after('post', sendErrorsOrNext).after('put', sendErrorsOrNext)
+
+function sendErrorsOrNext(req, res, next) {
+  const bundle = res.locals.bundle
+
+  if(bundle.errors) {
+    var errors = parseErrors(bundle.errors)
+    res.status(500).json({errors})
+  } else {
+    next()
+  }
 }
 
-exports.criar_cliente = (req, res) => {
-    var novo_cliente = new Cliente(req.body)
-    novo_cliente.save()
-        .then(cliente => {
-            res.json(cliente)
-        })
-        .catch(err => {
-            res.send(err)
-        })
+function parseErrors(nodeRestfulErrors) {
+  const errors = []
+  _.forIn(nodeRestfulErrors, error => errors.push(error.message))
+  return errors
 }
 
-exports.obter_cliente = (req, res) => {
-    Cliente.findById(req.params.clienteId)
-        .then(cliente => {
-            res.json(cliente)
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
+Clientes.route('count', function(req, res, next) {
+    Clientes.count(function(error, value) {
+    if(error) {
+      res.status(500).json({errors: [error]})
+    } else {
+      res.json({value})
+    }
+  })
+})
 
-exports.alterar_cliente = (req, res) => {
-    Cliente.findOneAndUpdate({ _id: req.params.clienteId }, req.body, { new: true })
-        .then(cliente => {
-            res.json(cliente)    
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
-
-exports.remover_cliente = function(req, res) {
-    Cliente.remove({ _id: req.params.clienteId })
-        .then(cliente => { 
-            res.json({ msg_erro: 'Cliente excluído com sucesso' })
-        })
-        .catch(err => {
-            res.send(err)
-        })
-}
+module.exports = Clientes

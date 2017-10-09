@@ -1,8 +1,7 @@
-'use strict'
-var mongoose = require('mongoose')
-var Schema = mongoose.Schema
+const restful = require('node-restful')
+const mongoose = restful.mongoose
 
-var EnderecoSchema = new Schema({ 
+var EnderecoSchema = new mongoose.Schema({ 
     Rua: String, 
     Numero: Number,
     Complemento: String,

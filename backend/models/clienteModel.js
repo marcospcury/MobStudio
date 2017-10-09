@@ -1,9 +1,9 @@
-'use strict'
-var mongoose = require('mongoose')
-var EnderecoSchema = require('./enderecoModel')
-var Schema = mongoose.Schema
+const restful = require('node-restful')
+const mongoose = restful.mongoose
 
-var ClienteSchema = new Schema({
+const EnderecoSchema = require('./enderecoModel')
+
+const ClienteSchema = new mongoose.Schema({
     Nome: { type: String, required: true },
     Enderecos: [ { type: EnderecoSchema } ],
     Telefones: {
@@ -19,4 +19,4 @@ var ClienteSchema = new Schema({
 },
 { bufferCommands: false })
 
-module.exports = mongoose.model('Clientes', ClienteSchema)
+module.exports = restful.model('Clientes', ClienteSchema)

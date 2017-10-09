@@ -21,7 +21,6 @@ gulp.task('app.css', () => {
 
 gulp.task('app.js', () => {
   return gulp.src('front/app/**/*.js')
-    .pipe(uglify())
     .pipe(concat('app.min.js'))
     .pipe(gulp.dest('front/public/assets/js'))
 })
