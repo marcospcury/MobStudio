@@ -7,7 +7,7 @@
     "test": "mocha",
     "start": "node index.js",
     "dev": "gulp",
-    "postinstall": "gulp"
+    "postinstall": "gulp --production"
   },
   "author": "Marcos Cury (mr-robot.cloud)",
   "license": "MIT",
