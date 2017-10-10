@@ -1,0 +1,47 @@
+<div role="form">
+  <div class="box-body">
+    <field id="produtoNome" label="Nome" model="produto.Nome"
+         placeholder="Informe o nome" grid="12 6 4" readonly="tabDelete"></field>
+    <field id="produtoFabricante" label="Fabricante" model="produto.Fabricante"
+         placeholder="Informe o fabricante" grid="12 6 4" readonly="tabDelete"></field>
+    <field id="produtoModelo" label="Modelo" model="produto.Modelo"
+         placeholder="Informe o modelo" grid="12 6 4" readonly="tabDelete"></field>
+    
+    <field id="produtoDescricao" label="Descrição" model="produto.Descricao"
+         placeholder="Informe a descrição" grid="12 6 12" readonly="tabDelete"></field>   
+
+
+    <field id="produtoCategoria" label="Categoria" model="produto.Categoria"
+         placeholder="Informe a categoria" grid="12 6 4" readonly="tabDelete"></field>
+    <field id="produtoSubCategoria" label="Sub Categoria" model="produto.SubCategoria"
+         placeholder="Informe a sub categoria" grid="12 6 4" readonly="tabDelete"></field>
+
+    <div class="col-xs-12">
+      <fieldset>
+          <legend>Medida</legend>
+            <combofield id="produtoTipoMedida" label="Tipo da medida" model="produto.TipoMedida"
+            grid="12 6 3" readonly="tabDelete" source="tipoMedidaList"></combofield>  
+
+            <field id="produtoLargura" label="Largura (cm)" model="produto.Medidas.Largura"
+              placeholder="Informe a largura" grid="12 6 3" readonly="tabDelete" ng-if="produto.TipoMedida == 'Tridimensional'" type="number"></field>
+            <field id="produtoAltura" label="Altura (cm)" model="produto.Medidas.Altura" ng-if="produto.TipoMedida == 'Tridimensional'" 
+              placeholder="Informe a altura" grid="12 6 3" readonly="tabDelete" type="number"></field>
+            <field id="produtoProfundidade" label="Profundidade (cm)" model="produto.Medidas.Profundidade" ng-if="produto.TipoMedida == 'Tridimensional'" 
+              placeholder="Informa a profundidade" grid="12 6 3" readonly="tabDelete" type="number"></field>
+
+            <field id="produtoMetroQuadrado" label="Metros quadrados" model="produto.Medidas.MetroQuadrado"
+              placeholder="Informe a metragem" grid="12 6 3" readonly="tabDelete" type="number" ng-if="produto.TipoMedida == 'Linear'"></field>
+      </fieldset>
+    </div>  
+  </div>
+   <hr>
+  <div class="box-footer">
+    <button class="btn btn-primary" ng-click="createProduto()"
+         ng-if="tabCreate">Incluir</button>
+    <button class="btn btn-info" ng-click="updateProduto()"
+         ng-if="tabUpdate">Alterar</button>
+    <button class="btn btn-danger" ng-click="deleteProduto()"
+         ng-if="tabDelete">Excluir</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+  </div>
+</div>

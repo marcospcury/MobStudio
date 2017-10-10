@@ -1,0 +1,30 @@
+<div class="box-body">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Fabricante</th>
+        <th>Modelo</th>
+        <th>Categoria</th>
+        <th>Sub Categoria</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="produto in produtos">
+        <td>{{:: produto.Nome }}</td>
+        <td>{{:: produto.Fabricante }}</td>
+        <td>{{:: produto.Modelo }}</td>
+        <td>{{:: produto.Categoria }}</td>
+        <td>{{:: produto.SubCategoria }}</td>
+        <td style="width:100px;">
+          <button class="btn btn-warning" ng-click="showTabUpdate(produto)"><i class="fa fa-pencil"></i></button>
+          <button class="btn btn-danger" ng-click="showTabDelete(produto)"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box-footer clearfix">
+   <paginator url="/#!/billingCycles" pages="{{ pages }}"></paginator>
+</div>
