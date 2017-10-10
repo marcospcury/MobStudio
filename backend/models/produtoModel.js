@@ -16,7 +16,11 @@ const ProdutoSchema = new mongoose.Schema({
     },
     Categoria: String,
     SubCategoria: String,
-    Foto: String
+    Fotos: [{
+        NomeArquivo: String,
+        ETag: String
+    }],
+    Tags: [String]
 },
 { bufferCommands: false })
 

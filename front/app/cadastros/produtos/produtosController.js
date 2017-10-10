@@ -5,14 +5,46 @@ angular.module('appMobStudio').controller('produtosController', [
   'msgs',
   'tabs',
   'consts',
+  'FileUploader',
   ProdutosController
 ])
 
-function ProdutosController($scope,$http, $location, msgs, tabs, consts) {
+function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUploader) {
+  var uploader = $scope.uploader = new FileUploader({
+    url: '/upload'
+  })
+
+  var addFotoProduto = (fileInfo) => {
+    if(!$scope.produto.Fotos) {
+      $scope.produto.Fotos = []
+    }
+    $scope.produto.Fotos.push(fileInfo)
+    const url = `api/produtos/${$scope.produto._id}`
+    $http.put(url, $scope.produto).then((response) => { 
+      msgs.addSuccess('Foto incluída no produto!')
+    })
+  }
+
+  uploader.onSuccessItem = function(fileItem, response, status, headers) {
+    const fileInfo = {
+      NomeArquivo: fileItem._file.name,
+      ETag: response.ETag
+    }
+    addFotoProduto(fileInfo)
+  }
+
+  uploader.filters.push({
+    name: 'customFilter',
+    fn: function(item /*{File|FileLikeObject}*/, options) {
+        return this.queue.length < 10;
+    }
+  })
+
   $scope.tipoMedidaList = [
     { value: 'Tridimensional', text: 'Tridimensional' },
     { value: 'Linear', text: 'Linear' },
   ]
+
   $scope.getProdutos = () => {
     const url = `api/produtos`
     $http.get(url).then(function(resp) {
@@ -50,7 +82,8 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts) {
       msgs.addError(resp.data.errors)
     })
   }
-  $scope.showTabDelete = function(produto) {
+
+  $scope.showTabDelete = (produto) => {
     $scope.produto = produto
     tabs.show($scope, {tabDelete: true})
   }
@@ -80,7 +113,5 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts) {
     $scope.produto.Enderecos.splice(index, 1)
   }
 
-
   $scope.getProdutos()  
-  
 }

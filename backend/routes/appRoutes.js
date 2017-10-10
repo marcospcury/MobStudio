@@ -1,8 +1,8 @@
-'use strict'
 const {checkAuth} = require('../utils/checkAuth')
 
 module.exports = (app) => {
-    var login = require('../controllers/loginController')
+    const login = require('../controllers/loginController')
+    const upload = require('../controllers/uploadController')
 
     app.route('/login')
         .get(login.get_login)
@@ -15,4 +15,7 @@ module.exports = (app) => {
     app.route('/').get((req, res) => {
         res.render('index')
     })
+
+    app.route('/upload')
+        .post(upload.post)
 }

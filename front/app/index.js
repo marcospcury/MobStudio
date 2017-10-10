@@ -1,5 +1,6 @@
 angular.module('appMobStudio', [
     'ui.router',
     'ngAnimate',
-    'toastr'
+    'toastr',
+    'angularFileUpload'
   ])

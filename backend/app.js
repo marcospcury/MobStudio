@@ -8,6 +8,7 @@ const checkAuth = require('./utils/checkAuth')
 const passport = require('passport')
 const session = require('express-session')
 const flash = require('express-flash')
+const fileUpload = require('express-fileupload')
 
 require('./config/database')()
 require('./config/passport')(passport)
@@ -23,6 +24,7 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(cookieParser())
 app.use(express.static(path.join(__dirname, '../front/public')))
+app.use(fileUpload())
 app.use(session({ 
   cookie: { maxAge: 60000 },
   key: process.env.MOB_SESSION_KEY,

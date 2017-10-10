@@ -1,4 +1,4 @@
-<div role="form">
+<div role="form" nv-file-drop="" uploader="uploader" filters="queueLimit, customFilter">
   <div class="box-body">
     <field id="produtoNome" label="Nome" model="produto.Nome"
          placeholder="Informe o nome" grid="12 6 4" readonly="tabDelete"></field>
@@ -9,7 +9,6 @@
     
     <field id="produtoDescricao" label="Descrição" model="produto.Descricao"
          placeholder="Informe a descrição" grid="12 6 12" readonly="tabDelete"></field>   
-
 
     <field id="produtoCategoria" label="Categoria" model="produto.Categoria"
          placeholder="Informe a categoria" grid="12 6 4" readonly="tabDelete"></field>
@@ -33,6 +32,27 @@
               placeholder="Informe a metragem" grid="12 6 3" readonly="tabDelete" type="number" ng-if="produto.TipoMedida == 'Linear'"></field>
       </fieldset>
     </div>  
+    <div class="col-xs-12" ng-if="tabUpdate">
+      <fieldset>
+        <legend>Fotos</legend>
+        <table class="table">
+          <thead>
+            <tr>
+              <th>Foto</th>
+              <th>Ações</th>
+            </tr>
+          </thead>
+          <tbody>
+              <tr ng-repeat="foto in produto.Fotos">
+                  <td><img src="{{ consts.awsUrl }}/{{foto.NomeArquivo}}" style="width:115px;height:115px;"></td>
+                  <td><button class="btn btn-danger" ng-click="deleteFoto(foto.ETag)"><i class="fa fa-trash-o"></i></button></td>
+              </tr>
+            </tr>
+          </tbody>
+        </table>
+        <div ng-include="'cadastros/produtos/upload.html'"></div>
+      </fieldset>
+    </div>
   </div>
    <hr>
   <div class="box-footer">
