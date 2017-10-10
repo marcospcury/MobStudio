@@ -33,6 +33,18 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
     addFotoProduto(fileInfo)
   }
 
+  $scope.deleteFoto = (index) => {
+    alert($scope.produto.Fotos[index].ETag)
+    $http.delete(`produtos/fotos/${$scope.produto.Fotos[index].ETag}`).then((response) => {
+      console.log(response)
+      $scope.produto.Fotos.splice(index, 0)
+      const url = `api/produtos/${$scope.produto._id}`
+      $http.put(url, $scope.produto).then((response) => { 
+        msgs.addSuccess('Foto excluída do produto!')
+      })
+    })
+  }
+
   uploader.filters.push({
     name: 'customFilter',
     fn: function(item /*{File|FileLikeObject}*/, options) {

@@ -45,7 +45,7 @@
           <tbody>
               <tr ng-repeat="foto in produto.Fotos">
                   <td><img src="{{ consts.awsUrl }}/{{foto.NomeArquivo}}" style="width:115px;height:115px;"></td>
-                  <td><button class="btn btn-danger" ng-click="deleteFoto(foto.ETag)"><i class="fa fa-trash-o"></i></button></td>
+                  <td><button class="btn btn-danger" ng-click="deleteFoto($index)"><i class="fa fa-trash-o"></i></button></td>
               </tr>
             </tr>
           </tbody>

@@ -3,6 +3,7 @@ const {checkAuth} = require('../utils/checkAuth')
 module.exports = (app) => {
     const login = require('../controllers/loginController')
     const upload = require('../controllers/uploadController')
+    const deleteFile = require('../controllers/deleteFileController')
 
     app.route('/login')
         .get(login.get_login)
@@ -18,4 +19,10 @@ module.exports = (app) => {
 
     app.route('/upload')
         .post(upload.post)
+
+    app.route('/produtos/fotos')
+        .post(deleteFile.delete_multiple)
+
+    app.route('/produtos/fotos/:etag')
+        .delete(deleteFile.delete_one)
 }
