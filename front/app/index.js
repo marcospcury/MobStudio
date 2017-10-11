@@ -2,5 +2,6 @@ angular.module('appMobStudio', [
     'ui.router',
     'ngAnimate',
     'toastr',
-    'angularFileUpload'
+    'angularFileUpload',
+    'thatisuday.ng-image-gallery'
   ])

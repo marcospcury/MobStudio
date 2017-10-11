@@ -21,6 +21,7 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
     $scope.produto.Fotos.push(fileInfo)
     const url = `api/produtos/${$scope.produto._id}`
     $http.put(url, $scope.produto).then((response) => { 
+      $scope.images = carregarFotosGallery($scope.produto.Fotos)
       msgs.addSuccess('Foto incluída no produto!')
     })
   }
@@ -28,21 +29,29 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   uploader.onSuccessItem = function(fileItem, response, status, headers) {
     const fileInfo = {
       NomeArquivo: fileItem._file.name,
-      ETag: response.ETag
+      ETag: response.ETag.replace('\"', '')
     }
     addFotoProduto(fileInfo)
   }
 
-  $scope.deleteFoto = (index) => {
-    alert($scope.produto.Fotos[index].ETag)
-    $http.delete(`produtos/fotos/${$scope.produto.Fotos[index].ETag}`).then((response) => {
-      console.log(response)
-      $scope.produto.Fotos.splice(index, 0)
+  $scope.deleteFoto = (index, cb) => {
+    $http.delete(`produtos/fotos/${$scope.produto.Fotos[index].NomeArquivo}`).then((response) => {
+      $scope.produto.Fotos.splice(index, 1)
       const url = `api/produtos/${$scope.produto._id}`
       $http.put(url, $scope.produto).then((response) => { 
         msgs.addSuccess('Foto excluída do produto!')
+        $scope.images = carregarFotosGallery($scope.produto.Fotos)
+        cb()
+      }).catch((resp) => {
+        msgs.addError(resp.data.errors)
       })
+    }).catch((resp) => {
+      msgs.addError(resp.data.errors)
     })
+  }
+
+  $scope.deleteImg = (img, cb) => {
+    $scope.deleteFoto(img.id, cb)
   }
 
   uploader.filters.push({
@@ -68,15 +77,30 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
 
   $scope.showTabUpdate = (produto) => {
     $scope.produto = produto
+    $scope.images = carregarFotosGallery(produto.Fotos)
     tabs.show($scope, {tabUpdate: true})
   }
   
+  const carregarFotosGallery = (fotos) => {
+    const fotosGallery = fotos.map((foto, index) => {
+      return {
+        id: index,
+        title: '',
+        url: `${consts.awsUrl}/${foto.NomeArquivo}`,
+        thumbUrl: `${consts.awsUrl}/${foto.NomeArquivo}`,
+        deletable: true
+      }
+    })
+    return fotosGallery
+  }
+
   $scope.updateProduto = () => {
     const url = `api/produtos/${$scope.produto._id}`
     $http.put(url, $scope.produto).then((response) => {
       $scope.produto = {}
       $scope.getProdutos()
       tabs.show($scope, {tabList: true, tabCreate: true})
+      uploader.clearQueue()
       msgs.addSuccess('Produto atualizado com sucesso!')
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
@@ -101,12 +125,17 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   }
   
   $scope.deleteProduto = () => {
-    const url = `api/produtos/${$scope.produto._id}`
-    $http.delete(url, $scope.produto).then((response) => {
-      $scope.produto = {}
-      $scope.getProdutos()
-      tabs.show($scope, {tabList: true, tabCreate: true})
-      msgs.addSuccess('Produto excluído com sucesso!')
+    $http.post('produtos/fotos', $scope.produto.Fotos).then((response) => {
+      const url = `api/produtos/${$scope.produto._id}`
+      $http.delete(url, $scope.produto).then((response) => {
+        $scope.produto = {}
+        $scope.images = []
+        $scope.getProdutos()
+        tabs.show($scope, {tabList: true, tabCreate: true})
+        msgs.addSuccess('Produto excluído com sucesso!')
+      }).catch((resp) => {
+        msgs.addError(resp.data.errors)
+      })
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
     })
@@ -115,14 +144,7 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   $scope.cancel = () => {
     tabs.show($scope, {tabList: true, tabCreate: true})
     $scope.produto = {}
-  }
-  
-  $scope.addEndereco = (index) => {
-    $scope.produto.Enderecos.splice(index + 1, 0, {})
-  }
-  
-  $scope.deleteEndereco = (index) => {
-    $scope.produto.Enderecos.splice(index, 1)
+    uploader.clearQueue()
   }
 
   $scope.getProdutos()  

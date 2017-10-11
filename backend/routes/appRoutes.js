@@ -23,6 +23,6 @@ module.exports = (app) => {
     app.route('/produtos/fotos')
         .post(deleteFile.delete_multiple)
 
-    app.route('/produtos/fotos/:etag')
+    app.route('/produtos/fotos/:nome_arquivo')
         .delete(deleteFile.delete_one)
 }
