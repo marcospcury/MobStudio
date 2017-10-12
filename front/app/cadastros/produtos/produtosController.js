@@ -11,7 +11,7 @@ angular.module('appMobStudio').controller('produtosController', [
 
 function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUploader) {
   var uploader = $scope.uploader = new FileUploader({
-    url: '/upload'
+    url: '/files/upload/produto_foto'
   })
 
   var addFotoProduto = (fileInfo) => {
@@ -19,28 +19,29 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
       $scope.produto.Fotos = []
     }
     $scope.produto.Fotos.push(fileInfo)
-    const url = `api/produtos/${$scope.produto._id}`
+    let url = `api/produtos/${$scope.produto._id}`
     $http.put(url, $scope.produto).then((response) => { 
-      $scope.images = carregarFotosGallery($scope.produto.Fotos)
+      loadGalleryPics()
       msgs.addSuccess('Foto incluída no produto!')
     })
   }
 
-  uploader.onSuccessItem = function(fileItem, response, status, headers) {
-    const fileInfo = {
+  uploader.onSuccessItem = (fileItem, response, status, headers) => {
+    let fileInfo = {
       NomeArquivo: fileItem._file.name,
-      ETag: response.ETag.replace('\"', '')
+      ETag: response.ETag.replace('\"', '').replace('\"', '')
     }
     addFotoProduto(fileInfo)
   }
 
-  $scope.deleteFoto = (index, cb) => {
-    $http.delete(`produtos/fotos/${$scope.produto.Fotos[index].NomeArquivo}`).then((response) => {
+  $scope.deleteImg = (img, cb) => {
+    const index = img.id
+    $http.delete(`files/delete_one/produto_foto/${$scope.produto.Fotos[index].NomeArquivo}`).then((response) => {
       $scope.produto.Fotos.splice(index, 1)
-      const url = `api/produtos/${$scope.produto._id}`
+      let url = `api/produtos/${$scope.produto._id}`
       $http.put(url, $scope.produto).then((response) => { 
         msgs.addSuccess('Foto excluída do produto!')
-        $scope.images = carregarFotosGallery($scope.produto.Fotos)
+        loadGalleryPics()
         cb()
       }).catch((resp) => {
         msgs.addError(resp.data.errors)
@@ -48,10 +49,6 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
     })
-  }
-
-  $scope.deleteImg = (img, cb) => {
-    $scope.deleteFoto(img.id, cb)
   }
 
   uploader.filters.push({
@@ -77,21 +74,20 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
 
   $scope.showTabUpdate = (produto) => {
     $scope.produto = produto
-    $scope.images = carregarFotosGallery(produto.Fotos)
+    loadGalleryPics()
     tabs.show($scope, {tabUpdate: true})
   }
   
-  const carregarFotosGallery = (fotos) => {
-    const fotosGallery = fotos.map((foto, index) => {
+  const loadGalleryPics = () => {
+    $scope.images = $scope.produto.Fotos.map((foto, index) => {
       return {
         id: index,
         title: '',
-        url: `${consts.awsUrl}/${foto.NomeArquivo}`,
-        thumbUrl: `${consts.awsUrl}/${foto.NomeArquivo}`,
+        url: `${consts.awsUrl}/produto_foto/${foto.NomeArquivo}`,
+        thumbUrl: `${consts.awsUrl}/produto_foto/${foto.NomeArquivo}`,
         deletable: true
       }
     })
-    return fotosGallery
   }
 
   $scope.updateProduto = () => {
@@ -125,7 +121,7 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   }
   
   $scope.deleteProduto = () => {
-    $http.post('produtos/fotos', $scope.produto.Fotos).then((response) => {
+    $http.post('files/delete_multiple/produto_foto', $scope.produto.Fotos).then((response) => {
       const url = `api/produtos/${$scope.produto._id}`
       $http.delete(url, $scope.produto).then((response) => {
         $scope.produto = {}

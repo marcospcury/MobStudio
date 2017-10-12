@@ -2,7 +2,7 @@ const {checkAuth} = require('../utils/checkAuth')
 
 module.exports = (app) => {
     const login = require('../controllers/loginController')
-    const upload = require('../controllers/uploadController')
+    const file = require('../controllers/fileController')
     const deleteFile = require('../controllers/deleteFileController')
 
     app.route('/login')
@@ -17,12 +17,12 @@ module.exports = (app) => {
         res.render('index')
     })
 
-    app.route('/upload')
-        .post(upload.post)
+    app.route('/files/upload/:origem')
+        .post(file.upload)
 
-    app.route('/produtos/fotos')
-        .post(deleteFile.delete_multiple)
+    app.route('/files/delete_multiple/:origem')
+        .post(file.delete_multiple)
 
-    app.route('/produtos/fotos/:nome_arquivo')
-        .delete(deleteFile.delete_one)
+    app.route('/files/delete_one/:origem/:nome_arquivo')
+        .delete(file.delete_one)
 }
