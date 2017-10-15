@@ -11,6 +11,9 @@ angular.module('appMobStudio').config([
     }).state('cadastroFornecedores', {
       url: "/cadastro/fornecedores?Page",
       templateUrl: "cadastros/fornecedores/tabs.html"
+    }).state('cadastroCategorias', {
+      url: "/cadastro/categorias?Page",
+      templateUrl: "cadastros/categorias/tabs.html"
     })
 
     $urlRouterProvider.otherwise('/dashboard')
