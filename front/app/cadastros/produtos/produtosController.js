@@ -64,12 +64,16 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   ]
 
   $scope.getProdutos = () => {
-    const url = `api/produtos`
+    const page = parseInt($location.search().page) || 1
+    const url = `api/produtos?skip=${(page - 1) * 10}&limit=10`
     $http.get(url).then(function(resp) {
       $scope.produtos = resp.data
       $scope.produto = {}
+      $http.get(`api/produtos/count`).then((resp) => {
+        $scope.pages = Math.ceil(resp.data.value / 10)
+        tabs.show($scope, {tabList: true, tabCreate: true})
+      })
     })
-    tabs.show($scope, {tabList: true, tabCreate: true})
   }
 
   $scope.showTabUpdate = (produto) => {

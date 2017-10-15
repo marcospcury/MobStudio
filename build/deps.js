@@ -17,6 +17,7 @@ gulp.task('deps.js', () => {
     'node_modules/admin-lte/bootstrap/js/bootstrap.min.js',
     'node_modules/admin-lte/plugins/slimScroll/jquery.slimscroll.min.js',
     'node_modules/admin-lte/dist/js/app.min.js',
+    'node_modules/angucomplete-alt/dist/angucomplete-alt.min.js',
   ])
   .pipe(uglify())
   .pipe(concat('deps.min.js'))
@@ -31,6 +32,7 @@ gulp.task('deps.css', () => {
     'node_modules/admin-lte/dist/css/AdminLTE.min.css',
     'node_modules/admin-lte/dist/css/skins/_all-skins.min.css',
     'node_modules/ng-image-gallery/dist/ng-image-gallery.min.css',
+    'node_modules/angucomplete-alt/angucomplete-alt.css',
   ])
   .pipe(uglifycss({ "uglyComments": true }))
   .pipe(concat('deps.min.css'))

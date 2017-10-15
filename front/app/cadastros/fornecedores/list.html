@@ -1,0 +1,28 @@
+<div class="box-body">
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Nome</th>
+        <th>Razão Social</th>
+        <th>Tipo</th>
+        <th>Email</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="fornecedor in fornecedores">
+        <td>{{:: fornecedor.Nome }}</td>
+        <td>{{:: fornecedor.RazaoSocial }}</td>
+        <td>{{:: fornecedor.Tipo }}</td>
+        <td>{{:: fornecedor.Email }}</td>
+        <td style="width:100px;">
+          <button class="btn btn-warning" ng-click="showTabUpdate(fornecedor)"><i class="fa fa-pencil"></i></button>
+          <button class="btn btn-danger" ng-click="showTabDelete(fornecedor)"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+<div class="box-footer clearfix">
+   <paginator url="/#!/cadastros/fornecedores" pages="{{ pages }}"></paginator>
+</div>

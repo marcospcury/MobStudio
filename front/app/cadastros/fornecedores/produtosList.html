@@ -1,0 +1,50 @@
+<div class="col-xs-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Produto</th>
+        <th>Código</th>
+        <th>Valor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <angucomplete-alt 
+            id="produto-search"
+            placeholder="Buscar produto"
+            pause="300"
+            selected-object="produtoInclusao.Produto"
+            local-data="produtoList"
+            search-fields="Nome"
+            title-field="Nome"
+            minlength="1"
+            input-class="form-control form-control-small"
+            match-class="highlight" />
+        </td>
+        <td>
+            <input ng-model="produtoInclusao.CodigoFornecedor" class="form-control" placeholder="Informe o Código"
+              ng-readonly="tabDelete" />
+        </td>
+        <td>
+            <input ng-model="produtoInclusao.Valor" class="form-control" placeholder="Informe o Nome"
+            ng-readonly="tabDelete" />
+        </td>
+        <td><button class="btn btn-success" ng-click="addProduto($index)"><i class="fa fa-plus"></i></button></td>
+      </tr>
+      <tr ng-repeat="produto in fornecedor.Produtos">
+        <td>{{carregarNomeProduto(produto.Produto)}}</td>
+        <td>{{produto.CodigoFornecedor}}</td>
+        <td>{{produto.Valor}}</td>
+        <td style="width:80px;" ng-if="!tabDelete">
+          <button class="btn btn-danger" ng-click="deleteProduto($index)"><i class="fa fa-trash-o"></i></button>
+        </td>
+        <td style="width:150px;" ng-if="tabDelete">
+          <button class="btn btn-success disabled"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-danger disabled"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

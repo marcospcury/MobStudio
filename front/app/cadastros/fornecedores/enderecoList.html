@@ -1,0 +1,40 @@
+<div class="col-xs-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Dados</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr ng-repeat="endereco in fornecedor.Enderecos">
+        <td>
+
+          <field id="enderecoRua" label="Logradouro" model="endereco.Rua"
+            placeholder="Informe o logradouro" grid="12 6 8" readonly="tabDelete"></field>  
+          <field id="enderecoNumero" label="Número" model="endereco.Numero" type="number"
+            placeholder="Informe o número" grid="12 6 2" readonly="tabDelete"></field>  
+          <field id="enderecoComplemento" label="Complemento" model="endereco.Complemento"
+            placeholder="Informe o complemento" grid="12 6 2" readonly="tabDelete"></field>
+          
+          <field id="enderecoBairro" label="Bairro" model="endereco.Bairro"
+            placeholder="Informe o Bairro" grid="12 6 3" readonly="tabDelete"></field>  
+          <field id="enderecoCEP" label="CEP" model="endereco.CEP"
+            placeholder="Informe o CEP" grid="12 6 3" readonly="tabDelete"></field>  
+          <field id="enderecoCidade" label="Cidade" model="endereco.Cidade"
+            placeholder="Informe a cidade" grid="12 6 3" readonly="tabDelete"></field>  
+          <field id="enderecoEstado" label="Estado" model="endereco.Estado"
+            placeholder="Informe o Estado" grid="12 6 3" readonly="tabDelete"></field>  
+        </td>
+        <td style="width:150px;" ng-if="!tabDelete">
+          <button class="btn btn-success" ng-click="addEndereco($index)"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-danger" ng-click="deleteEndereco($index)"><i class="fa fa-trash-o"></i></button>
+        </td>
+        <td style="width:150px;" ng-if="tabDelete">
+          <button class="btn btn-success disabled"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-danger disabled"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

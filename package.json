@@ -12,6 +12,7 @@
   "author": "Marcos Cury (mr-robot.cloud)",
   "license": "MIT",
   "dependencies": {
+    "angucomplete-alt": "^3.0.0",
     "angular-file-upload": "^2.5.0",
     "aws-sdk": "^2.130.0",
     "bcryptjs": "^2.4.3",

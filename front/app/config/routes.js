@@ -8,6 +8,9 @@ angular.module('appMobStudio').config([
     }).state('cadastroProdutos', {
       url: "/cadastro/produtos?Page",
       templateUrl: "cadastros/produtos/tabs.html"
+    }).state('cadastroFornecedores', {
+      url: "/cadastro/fornecedores?Page",
+      templateUrl: "cadastros/fornecedores/tabs.html"
     })
 
     $urlRouterProvider.otherwise('/dashboard')

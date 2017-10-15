@@ -10,13 +10,17 @@ angular.module('appMobStudio').controller('clientesController', [
 
 function ClientesController($scope,$http, $location, msgs, tabs, consts) {
   $scope.getClientes = () => {
-    const url = `api/clientes`
+    const page = parseInt($location.search().page) || 1
+    const url = `api/clientes?skip=${(page - 1) * 10}&limit=10`
     $http.get(url).then(function(resp) {
       $scope.clientes = resp.data
       $scope.cliente = {}
       initEnderecos()
+      $http.get(`api/clientes/count`).then((resp) => {
+        $scope.pages = Math.ceil(resp.data.value / 10)
+        tabs.show($scope, {tabList: true, tabCreate: true})
+      })
     })
-    tabs.show($scope, {tabList: true, tabCreate: true})
   }
 
   $scope.showTabUpdate = (cliente) => {

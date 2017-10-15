@@ -3,5 +3,6 @@ angular.module('appMobStudio', [
     'ngAnimate',
     'toastr',
     'angularFileUpload',
-    'thatisuday.ng-image-gallery'
+    'thatisuday.ng-image-gallery',
+    'angucomplete-alt'
   ])
