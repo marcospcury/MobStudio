@@ -1,22 +1,19 @@
 angular.module('appMobStudio').controller('clientesController', [
   '$scope',
-  '$http',
-  '$location',
+  'clienteData',
   'msgs',
   'tabs',
   'consts',
   ClientesController
 ])
 
-function ClientesController($scope,$http, $location, msgs, tabs, consts) {
+function ClientesController($scope, clienteData, msgs, tabs, consts) {
   $scope.getClientes = () => {
-    const page = parseInt($location.search().page) || 1
-    const url = `api/clientes?skip=${(page - 1) * 10}&limit=10`
-    $http.get(url).then(function(resp) {
+    clienteData.getClientes().then(function(resp) {
       $scope.clientes = resp.data
       $scope.cliente = {}
       initEnderecos()
-      $http.get(`api/clientes/count`).then((resp) => {
+      clienteData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
       })
@@ -29,8 +26,7 @@ function ClientesController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.updateCliente = () => {
-    const url = `api/clientes/${$scope.cliente._id}`
-    $http.put(url, $scope.cliente).then((response) => {
+    clienteData.updateCliente($scope.cliente).then((response) => {
       $scope.cliente = {}
       initEnderecos()
       $scope.getClientes()
@@ -42,8 +38,7 @@ function ClientesController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.createCliente = () => {
-    const url = `api/clientes`
-    $http.post(url, $scope.cliente).then((response) => {
+    clienteData.createCliente($scope.cliente).then((response) => {
       $scope.cliente = {}
       initEnderecos()
       $scope.getClientes()
@@ -53,14 +48,14 @@ function ClientesController($scope,$http, $location, msgs, tabs, consts) {
       msgs.addError(resp.data.errors)
     })
   }
+  
   $scope.showTabDelete = function(cliente) {
     $scope.cliente = cliente
     tabs.show($scope, {tabDelete: true})
   }
   
   $scope.deleteCliente = () => {
-    const url = `api/clientes/${$scope.cliente._id}`
-    $http.delete(url, $scope.cliente).then((response) => {
+    clienteData.deleteCliente($scope.cliente).then((response) => {
       $scope.cliente = {}
       initEnderecos()
       $scope.getClientes()
@@ -91,7 +86,5 @@ function ClientesController($scope,$http, $location, msgs, tabs, consts) {
       $scope.cliente.Enderecos.push({})
     }
   }
-
   $scope.getClientes()  
-  
 }

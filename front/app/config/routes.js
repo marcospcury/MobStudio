@@ -3,16 +3,16 @@ angular.module('appMobStudio').config([
   '$urlRouterProvider',
   function($stateProvider, $urlRouterProvider) {
     $stateProvider.state('cadastroClientes', {
-      url: "/cadastros/clientes?Page",
+      url: "/cadastros/clientes?page",
       templateUrl: "cadastros/clientes/tabs.html"
     }).state('cadastroProdutos', {
-      url: "/cadastro/produtos?Page",
+      url: "/cadastros/produtos?page",
       templateUrl: "cadastros/produtos/tabs.html"
     }).state('cadastroFornecedores', {
-      url: "/cadastro/fornecedores?Page",
+      url: "/cadastros/fornecedores?page",
       templateUrl: "cadastros/fornecedores/tabs.html"
     }).state('cadastroCategorias', {
-      url: "/cadastro/categorias?Page",
+      url: "/cadastros/categorias?page",
       templateUrl: "cadastros/categorias/tabs.html"
     })
 
