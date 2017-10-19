@@ -10,10 +10,10 @@
     <textfield id="produtoDescricao" label="Descrição" model="produto.Descricao"
          placeholder="Informe a descrição" grid="12 6 12" readonly="tabDelete" rows="3"></textfield>   
 
-    <field id="produtoCategoria" label="Categoria" model="produto.Categoria"
-         placeholder="Informe a categoria" grid="12 6 4" readonly="tabDelete"></field>
-    <field id="produtoSubCategoria" label="Sub Categoria" model="produto.SubCategoria"
-         placeholder="Informe a sub categoria" grid="12 6 4" readonly="tabDelete"></field>
+    <combofield id="produtoCategoria" label="Categoria" model="produto.Categoria" source="CategoriaList"
+         placeholder="Informe a categoria" grid="12 6 4" readonly="tabDelete"></combofield>
+    <combofield id="produtoSubCategoria" label="Sub Categoria" model="produto.SubCategoria" source="SubCategoriaList"
+         placeholder="Informe a sub categoria" grid="12 6 4" readonly="tabDelete"></combofield>
 
     <div class="col-xs-12">
       <fieldset>

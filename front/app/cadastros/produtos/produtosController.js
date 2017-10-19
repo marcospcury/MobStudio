@@ -1,5 +1,6 @@
 angular.module('appMobStudio').controller('produtosController', [
   '$scope',
+  'categoriaData',
   '$http',
   '$location',
   'msgs',
@@ -9,7 +10,36 @@ angular.module('appMobStudio').controller('produtosController', [
   ProdutosController
 ])
 
-function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUploader) {
+function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs, consts, FileUploader) {
+  var getListaCategorias = () => {
+    categoriaData.getCategoriasPorTipo("Produto")
+      .then((resp) => {
+        $scope.CategoriaList = resp.data.map((categoria) => {
+          return {
+            text: categoria.Nome,
+            value: categoria.Nome,
+            SubCategoria: categoria.SubCategoria
+          }
+        })
+        $scope.SubCategoriaList = []
+      })
+  }
+
+  $scope.produto = { Categoria: "" }
+  $scope.$watch(('produto.Categoria'), (categoria, old) => {
+    if($scope.produto.Categoria) {
+      const categoriaObj = $scope.CategoriaList.find((categoria) => {
+        return categoria.text === $scope.produto.Categoria
+      })
+      $scope.SubCategoriaList = categoriaObj.SubCategoria.map((subCategoria) => {
+        return {
+          text: subCategoria.Nome,
+          value: subCategoria.Nome
+        }
+      })
+    }
+  })
+
   var uploader = $scope.uploader = new FileUploader({
     url: '/files/upload/produto_foto'
   })
@@ -148,4 +178,5 @@ function ProdutosController($scope,$http, $location, msgs, tabs, consts, FileUpl
   }
 
   $scope.getProdutos()  
+  getListaCategorias()
 }

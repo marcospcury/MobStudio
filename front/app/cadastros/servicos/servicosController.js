@@ -40,7 +40,6 @@ function ServicosController($scope, servicoData, categoriaData, msgs, tabs, cons
 
   $scope.getServicos = () => {
     servicoData.getServicos().then(function(resp) {
-      getListaCategorias()
       $scope.servicos = resp.data
       $scope.servico = {}
       servicoData.getCount().then((resp) => {
@@ -99,4 +98,5 @@ function ServicosController($scope, servicoData, categoriaData, msgs, tabs, cons
   }
   
   $scope.getServicos()  
+  getListaCategorias()
 }
