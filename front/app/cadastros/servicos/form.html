@@ -1,0 +1,22 @@
+<div role="form">
+  <div class="box-body">
+    <field id="servicoNome" label="Nome" model="servico.Nome"
+         placeholder="Informe o nome" grid="12 6 4" readonly="tabDelete"></field>
+    <combofield id="servicoCategoria" label="Categoria" model="servico.Categoria"
+         placeholder="Informe a categoria" grid="12 6 4" readonly="tabDelete" source="CategoriaList"></combofield>
+    <combofield id="servicoSubcategoria" label="Sub categoria" model="servico.SubCategoria" source="SubCategoriaList"
+         placeholder="Informe a sub categoria" grid="12 6 4" readonly="tabDelete"></combofield>    
+
+    <textfield id="servicoDescricao" label="Descrição" model="servico.Descricao"
+         placeholder="Informe a descrição" grid="12 6 12" readonly="tabDelete"></textfield>    
+
+  <div class="box-footer">
+    <button class="btn btn-primary" ng-click="createServico()"
+         ng-if="tabCreate">Incluir</button>
+    <button class="btn btn-info" ng-click="updateServico()"
+         ng-if="tabUpdate">Alterar</button>
+    <button class="btn btn-danger" ng-click="deleteServico()"
+         ng-if="tabDelete">Excluir</button>
+    <button class="btn btn-default" ng-click="cancel()">Cancelar</button>
+  </div>
+</div>
