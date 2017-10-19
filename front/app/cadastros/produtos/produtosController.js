@@ -1,8 +1,8 @@
 angular.module('appMobStudio').controller('produtosController', [
   '$scope',
+  'produtoData',
   'categoriaData',
   '$http',
-  '$location',
   'msgs',
   'tabs',
   'consts',
@@ -10,7 +10,7 @@ angular.module('appMobStudio').controller('produtosController', [
   ProdutosController
 ])
 
-function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs, consts, FileUploader) {
+function ProdutosController($scope, produtoData, categoriaData,  $http, msgs, tabs, consts, FileUploader) {
   var getListaCategorias = () => {
     categoriaData.getCategoriasPorTipo("Produto")
       .then((resp) => {
@@ -49,8 +49,7 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
       $scope.produto.Fotos = []
     }
     $scope.produto.Fotos.push(fileInfo)
-    let url = `api/produtos/${$scope.produto._id}`
-    $http.put(url, $scope.produto).then((response) => { 
+    produtoData.updateProduto($scope.produto).then((response) => { 
       loadGalleryPics()
       msgs.addSuccess('Foto incluída no produto!')
     })
@@ -68,8 +67,7 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
     const index = img.id
     $http.delete(`files/delete_one/produto_foto/${$scope.produto.Fotos[index].NomeArquivo}`).then((response) => {
       $scope.produto.Fotos.splice(index, 1)
-      let url = `api/produtos/${$scope.produto._id}`
-      $http.put(url, $scope.produto).then((response) => { 
+      produtoData.updateProduto($scope.produto).then((response) => { 
         msgs.addSuccess('Foto excluída do produto!')
         loadGalleryPics()
         cb()
@@ -94,12 +92,10 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
   ]
 
   $scope.getProdutos = () => {
-    const page = parseInt($location.search().page) || 1
-    const url = `api/produtos?skip=${(page - 1) * 10}&limit=10`
-    $http.get(url).then(function(resp) {
+    produtoData.getProdutos().then(function(resp) {
       $scope.produtos = resp.data
       $scope.produto = {}
-      $http.get(`api/produtos/count`).then((resp) => {
+      produtoData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
       })
@@ -125,8 +121,7 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
   }
 
   $scope.updateProduto = () => {
-    const url = `api/produtos/${$scope.produto._id}`
-    $http.put(url, $scope.produto).then((response) => {
+    produtoData.updateProduto($scope.produto).then((response) => {
       $scope.produto = {}
       $scope.getProdutos()
       tabs.show($scope, {tabList: true, tabCreate: true})
@@ -138,8 +133,7 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
   }
   
   $scope.createProduto = () => {
-    const url = `api/produtos`
-    $http.post(url, $scope.produto).then((response) => {
+    produtoData.createProduto($scope.produto).then((response) => {
       $scope.produto = {}
       $scope.getProdutos()
       tabs.show($scope, {tabList: true, tabCreate: true})
@@ -156,8 +150,7 @@ function ProdutosController($scope, categoriaData, $http, $location, msgs, tabs,
   
   $scope.deleteProduto = () => {
     $http.post('files/delete_multiple/produto_foto', $scope.produto.Fotos).then((response) => {
-      const url = `api/produtos/${$scope.produto._id}`
-      $http.delete(url, $scope.produto).then((response) => {
+      produtoData.deleteProduto($scope.produto).then((response) => {
         $scope.produto = {}
         $scope.images = []
         $scope.getProdutos()

@@ -1,27 +1,24 @@
 angular.module('appMobStudio').controller('categoriasController', [
   '$scope',
-  '$http',
-  '$location',
+  'categoriaData',
   'msgs',
   'tabs',
   'consts',
   CategoriasController
 ])
 
-function CategoriasController($scope,$http, $location, msgs, tabs, consts) {
+function CategoriasController($scope, categoriaData, msgs, tabs, consts) {
   $scope.tipoCategoriaList = [
     { value: "Produto", text: "Produto" },
     { value: "Serviço", text: "Serviço" }
   ]
 
   $scope.getCategorias = () => {
-    const page = parseInt($location.search().page) || 1
-    const url = `api/categorias?skip=${(page - 1) * 10}&limit=10`
-    $http.get(url).then(function(resp) {
+    categoriaData.getCategorias().then(function(resp) {
       $scope.categorias = resp.data
       $scope.categoria = {}
       initSubCategorias()
-      $http.get(`api/categorias/count`).then((resp) => {
+      categoriaData.GetCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
       })
@@ -35,26 +32,24 @@ function CategoriasController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.updateCategoria = () => {
-    const url = `api/categorias/${$scope.categoria._id}`
-    $http.put(url, $scope.categoria).then((response) => {
+    categoriaData.updateCategoria($scope.categoria).then((response) => {
       $scope.categoria = {}
       initSubCategorias()
       $scope.getCategorias()
       tabs.show($scope, {tabList: true, tabCreate: true})
-      msgs.addSuccess('categoria atualizado com sucesso!')
+      msgs.addSuccess('Categoria atualizada com sucesso!')
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
     })
   }
   
   $scope.createCategoria = () => {
-    const url = `api/Categorias`
-    $http.post(url, $scope.categoria).then((response) => {
+    categoriaData.createCategoria($scope.categoria).then((response) => {
       $scope.categoria = {}
       initSubCategorias()
       $scope.getCategorias()
       tabs.show($scope, {tabList: true, tabCreate: true})
-      msgs.addSuccess('categoria incluído com sucesso!')
+      msgs.addSuccess('Categoria incluída com sucesso!')
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
     })
@@ -65,13 +60,12 @@ function CategoriasController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.deleteCategoria = () => {
-    const url = `api/Categorias/${$scope.categoria._id}`
-    $http.delete(url, $scope.categoria).then((response) => {
+    categoriaData.deleteCategoria($scope.categoria).then((response) => {
       $scope.categoria = {}
       initSubCategorias()
       $scope.getCategorias()
       tabs.show($scope, {tabList: true, tabCreate: true})
-      msgs.addSuccess('categoria excluído com sucesso!')
+      msgs.addSuccess('Categoria excluída com sucesso!')
     }).catch((resp) => {
       msgs.addError(resp.data.errors)
     })
@@ -99,5 +93,4 @@ function CategoriasController($scope,$http, $location, msgs, tabs, consts) {
   }
 
   $scope.getCategorias()  
-  
 }

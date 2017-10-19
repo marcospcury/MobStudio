@@ -1,31 +1,29 @@
 angular.module('appMobStudio').controller('fornecedoresController', [
   '$scope',
-  '$http',
-  '$location',
+  'fornecedorData',
+  'produtoData',
   'msgs',
   'tabs',
   'consts',
   FornecedoresController
 ])
 
-function FornecedoresController($scope,$http, $location, msgs, tabs, consts) {
+function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs, consts) {
  
   $scope.getProdutos = () => {
-    $http.get('api/produtos').then(function(resp) {
+    produtoData.getProdutos().then(function(resp) {
       $scope.produtoList = resp.data
     })
   }
   
   $scope.getFornecedores = () => {
-    const page = parseInt($location.search().page) || 1
-    const url = `api/fornecedores?skip=${(page - 1) * 10}&limit=10`
-    $http.get(url).then(function(resp) {
+    fornecedorData.getFornecedores().then(function(resp) {
       $scope.fornecedores = resp.data
       $scope.fornecedor = {}
       $scope.getProdutos()
       initEnderecos()
       initProdutos()
-      $http.get(`api/fornecedores/count`).then((resp) => {
+      fornecedorData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
       })
@@ -45,8 +43,7 @@ function FornecedoresController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.updateFornecedor = () => {
-    const url = `api/fornecedores/${$scope.fornecedor._id}`
-    $http.put(url, $scope.fornecedor).then((response) => {
+    fornecedorData.updateFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
       initProdutos()
@@ -59,8 +56,7 @@ function FornecedoresController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.createFornecedor = () => {
-    const url = `api/fornecedores`
-    $http.post(url, $scope.fornecedor).then((response) => {
+    fornecedorData.createFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
       initProdutos()
@@ -77,8 +73,7 @@ function FornecedoresController($scope,$http, $location, msgs, tabs, consts) {
   }
   
   $scope.deleteFornecedor = () => {
-    const url = `api/fornecedores/${$scope.fornecedor._id}`
-    $http.delete(url, $scope.fornecedor).then((response) => {
+    fornecedorData.deleteFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
       initProdutos()
@@ -133,5 +128,4 @@ function FornecedoresController($scope,$http, $location, msgs, tabs, consts) {
   }
 
   $scope.getFornecedores()  
-  
 }
