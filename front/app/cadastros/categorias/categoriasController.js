@@ -18,7 +18,7 @@ function CategoriasController($scope, categoriaData, msgs, tabs, consts) {
       $scope.categorias = resp.data
       $scope.categoria = {}
       initSubCategorias()
-      categoriaData.GetCount().then((resp) => {
+      categoriaData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
       })
