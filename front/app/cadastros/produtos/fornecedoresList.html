@@ -1,0 +1,50 @@
+<div class="col-xs-12">
+  <table class="table">
+    <thead>
+      <tr>
+        <th>Fornecedor</th>
+        <th>Código interno</th> 
+        <th>Valor</th>
+        <th>Ações</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr>
+        <td>
+          <angucomplete-alt 
+            id="fornecedor-search"
+            placeholder="Buscar fornecedor"
+            pause="300"
+            selected-object="fornecedorInclusao.Fornecedor"
+            local-data="fornecedoresList"
+            search-fields="Nome"
+            title-field="Nome"
+            minlength="1"
+            input-class="form-control form-control-small"
+            match-class="highlight" />
+        </td>
+        <td>
+            <input ng-model="fornecedorInclusao.CodigoInternoProduto" class="form-control" placeholder="Informe o código do fornecedor para o  produto"
+              ng-readonly="tabDelete" />
+        </td>
+        <td>
+            <input ng-model="fornecedorInclusao.Valor" class="form-control" placeholder="Informe o Nome"
+            ng-readonly="tabDelete" type="number"/>
+        </td>
+        <td><button class="btn btn-success" ng-click="addFornecedor($index)"><i class="fa fa-plus"></i></button></td>
+      </tr>
+      <tr ng-repeat="fornecedor in produto.Fornecedores">
+        <td>{{carregarNomeFornecedor(fornecedor.Fornecedor)}}</td>
+        <td>{{fornecedor.CodigoInternoProduto}}</td>
+        <td>{{fornecedor.Valor}}</td>
+        <td style="width:80px;" ng-if="!tabDelete">
+          <button class="btn btn-danger" ng-click="deleteFornecedor($index)"><i class="fa fa-trash-o"></i></button>
+        </td>
+        <td style="width:150px;" ng-if="tabDelete">
+          <button class="btn btn-success disabled"><i class="fa fa-plus"></i></button>
+          <button class="btn btn-danger disabled"><i class="fa fa-trash-o"></i></button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

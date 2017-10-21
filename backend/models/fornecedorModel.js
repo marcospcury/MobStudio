@@ -12,11 +12,6 @@ const FornecedorSchema = new mongoose.Schema({
         Celular: String,
         Comercial: String
      },
-     Produtos: [{
-        Produto: { type: mongoose.Schema.Types.ObjectId, ref: 'Produtos' },
-        CodigoFornecedor: { type: String, required: true },
-        Valor: Number
-     }],
      Email: { type: String, required: true },
      NomeContato: String,
 },

@@ -32,6 +32,14 @@
               placeholder="Informe a metragem" grid="12 6 3" readonly="tabDelete" type="number" ng-if="produto.TipoMedida == 'Linear'"></field>
       </fieldset>
     </div>  
+
+    <div class="col-xs-12">
+      <fieldset>
+        <legend>Fornecedores</legend>
+        <div ng-include="'cadastros/produtos/fornecedoresList.html'"></div>
+      </fieldset>
+    </div>
+
     <div class="col-xs-12" ng-if="tabUpdate">
       <fieldset>
         <legend>Fotos</legend>

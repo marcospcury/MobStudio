@@ -2,6 +2,7 @@ angular.module('appMobStudio').controller('produtosController', [
   '$scope',
   'produtoData',
   'categoriaData',
+  'fornecedorData',
   '$http',
   'msgs',
   'tabs',
@@ -10,7 +11,34 @@ angular.module('appMobStudio').controller('produtosController', [
   ProdutosController
 ])
 
-function ProdutosController($scope, produtoData, categoriaData,  $http, msgs, tabs, consts, FileUploader) {
+function ProdutosController($scope, produtoData, categoriaData,  fornecedorData, $http, msgs, tabs, consts, FileUploader) {
+
+  $scope.getFornecedores = () => {
+    fornecedorData.getFornecedores().then((resp) => {
+      $scope.fornecedoresList = resp.data
+    })
+  }
+
+  $scope.carregarNomeFornecedor = (idFornecedor) => {
+    let fornecedor = $scope.fornecedoresList.filter((fornecedor) => {
+      return fornecedor._id === idFornecedor
+    })
+    return fornecedor[0].Nome
+  }
+
+  $scope.addFornecedor = () => {
+    $scope.produto.Fornecedores.push({ 
+      Fornecedor: $scope.fornecedorInclusao.Fornecedor.originalObject._id,  
+      CodigoInternoProduto: $scope.fornecedorInclusao.CodigoInternoProduto,
+      Valor: $scope.fornecedorInclusao.Valor
+    })
+    $scope.fornecedorInclusao = {}
+  }
+  
+  $scope.deleteFornecedor = (index) => {
+    $scope.produto.Fornecedores.splice(index, 1)
+  }
+
   var getListaCategorias = () => {
     categoriaData.getCategoriasPorTipo("Produto")
       .then((resp) => {
@@ -95,6 +123,8 @@ function ProdutosController($scope, produtoData, categoriaData,  $http, msgs, ta
     produtoData.getProdutos().then(function(resp) {
       $scope.produtos = resp.data
       $scope.produto = {}
+      $scope.getFornecedores()
+      initFornecedores()
       produtoData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
@@ -168,6 +198,13 @@ function ProdutosController($scope, produtoData, categoriaData,  $http, msgs, ta
     tabs.show($scope, {tabList: true, tabCreate: true})
     $scope.produto = {}
     uploader.clearQueue()
+  }
+
+  var initFornecedores = () => {
+    $scope.fornecedorInclusao = {}
+    if(!$scope.produto.Fornecedores || !$scope.produto.Fornecedores.length) {
+      $scope.produto.Fornecedores = []
+    }
   }
 
   $scope.getProdutos()  

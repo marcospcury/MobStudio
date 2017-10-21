@@ -1,28 +1,19 @@
 angular.module('appMobStudio').controller('fornecedoresController', [
   '$scope',
   'fornecedorData',
-  'produtoData',
   'msgs',
   'tabs',
   'consts',
   FornecedoresController
 ])
 
-function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs, consts) {
+function FornecedoresController($scope, fornecedorData, msgs, tabs, consts) {
  
-  $scope.getProdutos = () => {
-    produtoData.getProdutos().then(function(resp) {
-      $scope.produtoList = resp.data
-    })
-  }
-  
   $scope.getFornecedores = () => {
     fornecedorData.getFornecedores().then(function(resp) {
       $scope.fornecedores = resp.data
       $scope.fornecedor = {}
-      $scope.getProdutos()
       initEnderecos()
-      initProdutos()
       fornecedorData.getCount().then((resp) => {
         $scope.pages = Math.ceil(resp.data.value / 10)
         tabs.show($scope, {tabList: true, tabCreate: true})
@@ -35,18 +26,10 @@ function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs,
     tabs.show($scope, {tabUpdate: true})
   }
 
-  $scope.carregarNomeProduto = (idProduto) => {
-    let produto = $scope.produtoList.filter((produto) => {
-      return produto._id === idProduto
-    })
-    return produto[0].Nome
-  }
-  
   $scope.updateFornecedor = () => {
     fornecedorData.updateFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
-      initProdutos()
       $scope.getFornecedores()
       tabs.show($scope, {tabList: true, tabCreate: true})
       msgs.addSuccess('Fornecedor atualizado com sucesso!')
@@ -59,7 +42,6 @@ function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs,
     fornecedorData.createFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
-      initProdutos()
       $scope.getFornecedores()
       tabs.show($scope, {tabList: true, tabCreate: true})
       msgs.addSuccess('Fornecedor incluído com sucesso!')
@@ -76,7 +58,6 @@ function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs,
     fornecedorData.deleteFornecedor($scope.fornecedor).then((response) => {
       $scope.fornecedor = {}
       initEnderecos()
-      initProdutos()
       $scope.getFornecedores()
       tabs.show($scope, {tabList: true, tabCreate: true})
       msgs.addSuccess('Fornecedor excluído com sucesso!')
@@ -89,7 +70,6 @@ function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs,
     tabs.show($scope, {tabList: true, tabCreate: true})
     $scope.fornecedor = {}
     initEnderecos()
-    initProdutos()
   }
   
   $scope.addEndereco = (index) => {
@@ -100,30 +80,10 @@ function FornecedoresController($scope, fornecedorData, produtoData, msgs, tabs,
     $scope.fornecedor.Enderecos.splice(index, 1)
   }
 
-  $scope.addProduto = () => {
-    $scope.fornecedor.Produtos.push({ 
-      Produto: $scope.produtoInclusao.Produto.originalObject._id,  
-      CodigoFornecedor: $scope.produtoInclusao.CodigoFornecedor,
-      Valor: $scope.produtoInclusao.Valor
-    })
-    $scope.produtoInclusao = {}
-  }
-  
-  $scope.deleteProduto = (index) => {
-    $scope.fornecedor.Produtos.splice(index, 1)
-  }
-  
   var initEnderecos = () => {
     if(!$scope.fornecedor.Enderecos || !$scope.fornecedor.Enderecos.length) {
       $scope.fornecedor.Enderecos = []
       $scope.fornecedor.Enderecos.push({})
-    }
-  }
-
-  var initProdutos = () => {
-    $scope.produtoInclusao = {}
-    if(!$scope.fornecedor.Produtos || !$scope.fornecedor.Produtos.length) {
-      $scope.fornecedor.Produtos = []
     }
   }
 
