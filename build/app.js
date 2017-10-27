@@ -1,5 +1,6 @@
 const gulp = require('gulp')
 const uglify = require('gulp-uglify')
+const babel = require('gulp-babel')
 const uglifycss = require('gulp-uglifycss')
 const concat = require('gulp-concat')
 const htmlmin = require('gulp-htmlmin')
@@ -21,6 +22,8 @@ gulp.task('app.css', () => {
 
 gulp.task('app.js', () => {
   return gulp.src('front/app/**/*.js')
+    .pipe(babel({ presets: ['env'] }))
+    .pipe(uglify())
     .pipe(concat('app.min.js'))
     .pipe(gulp.dest('front/public/assets/js'))
 })
@@ -28,4 +31,11 @@ gulp.task('app.js', () => {
 gulp.task('app.assets', () => {
   return gulp.src('assets/**/*.*')
     .pipe(gulp.dest('front/public/assets'))
+})
+
+gulp.task('app.test', () => {
+  return gulp.src('front/app/**/*.js')
+    .pipe(babel({ presets: ['env'] }))
+    .pipe(concat('app.min.js'))
+    .pipe(gulp.dest('front/public/assets/js'))
 })
