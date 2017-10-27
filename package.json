@@ -4,7 +4,7 @@
   "description": "MobStudio's projects and budget management",
   "main": "app.js",
   "scripts": {
-    "test": "mocha",
+    "test": "gulp test",
     "start": "node index.js",
     "dev": "gulp",
     "postinstall": "gulp --production"

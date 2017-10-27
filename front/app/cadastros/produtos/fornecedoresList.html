@@ -28,7 +28,7 @@
               ng-readonly="tabDelete" />
         </td>
         <td>
-            <input ng-model="fornecedorInclusao.Valor" class="form-control" placeholder="Informe o Nome"
+            <input ng-model="fornecedorInclusao.Valor" class="form-control" placeholder="Informe o valor"
             ng-readonly="tabDelete" type="number"/>
         </td>
         <td><button class="btn btn-success" ng-click="addFornecedor($index)"><i class="fa fa-plus"></i></button></td>
@@ -36,8 +36,8 @@
       <tr ng-repeat="fornecedor in produto.Fornecedores">
         <td>{{carregarNomeFornecedor(fornecedor.Fornecedor)}}</td>
         <td>{{fornecedor.CodigoInternoProduto}}</td>
-        <td>{{fornecedor.Valor}}</td>
-        <td style="width:80px;" ng-if="!tabDelete">
+        <td>{{fornecedor.Valor.toLocaleString('pt-BR')}}</td>
+        <td style="width:70px;" ng-if="!tabDelete">
           <button class="btn btn-danger" ng-click="deleteFornecedor($index)"><i class="fa fa-trash-o"></i></button>
         </td>
         <td style="width:150px;" ng-if="tabDelete">

@@ -10,3 +10,13 @@ gulp.task("test.js", done => {
     done
   ).start();
 });
+
+gulp.task("test.auto", done => {
+  new Server(
+    {
+      configFile: __dirname + "/karma.conf.js",
+      singleRun: false
+    },
+    done
+  ).start();
+});

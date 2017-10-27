@@ -36,6 +36,6 @@ gulp.task('app.assets', () => {
 gulp.task('app.test', () => {
   return gulp.src('front/app/**/*.js')
     .pipe(babel({ presets: ['env'] }))
-    .pipe(concat('app.min.js'))
-    .pipe(gulp.dest('front/public/assets/js'))
+    .pipe(concat('app.test.js'))
+    .pipe(gulp.dest('test/app'))
 })

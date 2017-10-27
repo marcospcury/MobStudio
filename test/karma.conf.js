@@ -3,7 +3,7 @@ module.exports = function(config) {
     basePath: "./",
     files: [
       "../front/public/assets/js/deps.min.js",
-      "../front/public/assets/js/app.min.js",
+      "../test/app/app.test.js",
       "../node_modules/bardjs/bard.js",
       "../node_modules/angular-mocks/angular-mocks.js",
       "../test/test-helpers/*.js",
@@ -22,7 +22,7 @@ module.exports = function(config) {
     frameworks: ["mocha", "chai", "sinon", "chai-sinon"],
     logLevel: config.LOG_INFO,
     preprocessors: {
-      '../front/public/assets/js/app.min.js': ['coverage']
+      '../test/app/app.test.js': ['coverage']
     }
   });
 };
