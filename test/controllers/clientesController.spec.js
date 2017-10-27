@@ -27,6 +27,7 @@ describe("ClientesController", function() {
         data: { value: 15 }
       })
     );
+    sinon.stub(msgs, "addSuccess").returns("");
     $scope = $rootScope.$new();
     controller = $controller("clientesController", {
       $scope: $scope
@@ -92,7 +93,19 @@ describe("ClientesController", function() {
       });
 
       it("Serviço de dados deve ser acionado", function() {
-        expect(clienteData.updateCliente.getCall(0).args[0]).to.equal($scope.cliente);
+        expect(clienteData.updateCliente.getCall(0).args[0]).to.equal(
+          $scope.cliente
+        );
+      });
+
+      it("Cliente carregado deve estar resetado", function() {
+        $scope.$apply();
+        expect($scope.cliente._id).to.be.undefined;
+      });
+
+      it("Mensagem de sucesso deve ser apresentada", function() {
+        $scope.$apply();
+        expect(msgs.addSuccess.getCall(0).args[0]).to.equal("Cliente atualizado com sucesso!");
       });
     });
   });
