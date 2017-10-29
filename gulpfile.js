@@ -5,7 +5,7 @@ const sequence = require('run-sequence')
 require('./build/app')
 require('./build/deps')
 require('./build/server')
-require('./test/gulp.test')
+require('./gulp.test')
 
 gulp.task('default', () => {
   if(util.env.production) {

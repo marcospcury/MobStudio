@@ -1,6 +1,7 @@
 # MobStudio
 
 [![Build Status](https://travis-ci.org/marcospcury/MobStudio.svg?branch=master)](https://travis-ci.org/marcospcury/MobStudio)
+[![Coverage Status](https://coveralls.io/repos/github/marcospcury/MobStudio/badge.svg?branch=master)](https://coveralls.io/github/marcospcury/MobStudio?branch=master)
 
 Aplicativo de controle de projetos de arquitetura e decoração
 

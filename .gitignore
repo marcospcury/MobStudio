@@ -2,3 +2,4 @@ node_modules
 front/public
 test/coverage
 test/app
+coverage
