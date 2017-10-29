@@ -1,7 +1,7 @@
 const gulp = require("gulp");
 const Server = require("karma").Server;
 
-gulp.task("test.js", done => {
+gulp.task("test.front", done => {
   new Server(
     {
       configFile: __dirname + "/karma.conf.js",

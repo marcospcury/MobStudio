@@ -16,7 +16,7 @@ module.exports = function(config) {
       reporters: [{ type: "lcov", subdir: "." }, { type: "text-summary" }]
     },
     frameworks: ["mocha", "chai", "sinon", "chai-sinon"],
-    logLevel: config.LOG_DEBUG,
+    logLevel: config.LOG_INFO,
     preprocessors: {
       "test/app/app.test.js": ["coverage"]
     }

@@ -9,12 +9,16 @@ require('./gulp.test')
 
 gulp.task('default', () => {
   if(util.env.production) {
-    sequence('deps', 'app.test', 'test.js', 'app')
+    sequence('deps', 'app')
   } else {
     sequence('deps', 'app', 'server')
   }
 })
 
-gulp.task('test', () => {
+gulp.task('test.auto', () => {
   sequence('app.test', 'test.auto')
+})
+
+gulp.task('test.travis', () => {
+  sequence('deps', 'app.test', 'test.front')
 })

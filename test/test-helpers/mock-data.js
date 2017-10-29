@@ -1,6 +1,7 @@
 var mockData = (function() {
   return {
-    getClientes: getClientes
+    getClientes: getClientes,
+    getFornecedores: getFornecedores
   };
   function getClientes() {
     return [
@@ -47,5 +48,48 @@ var mockData = (function() {
         ]
       }
     ];
+  }
+
+  function getFornecedores() {
+    return [
+      {
+        _id: "1",
+        Nome: "Fornecedor A",
+        Email: "fornecedorA@gmail.com",
+        NomeContato: "O mesmo",
+        Telefones: { Comercial: "(11) 5555-4444", Celular: "(11) 95555-4444" },
+        Tipo: "Loja",
+        Enderecos: [
+          {
+            Rua: "Rua Teste",
+            Numero: 400,
+            Bairro: "Bairro Teste",
+            CEP: "04200-000",
+            Cidade: "São Paulo",
+            Estado: "SP",
+            _id: "1"
+          }
+        ]
+      },
+      {
+        _id: "2",
+        Nome: "Fornecedor B",
+        Email: "fornecedorB@gmail.com",
+        NomeContato: "O mesmo",
+        Telefones: { Comercial: "(11) 5555-4444", Celular: "(11) 95555-4444" },
+        Tipo: "Loja",
+        Enderecos: [
+          {
+            Rua: "Rua Teste",
+            Numero: 400,
+            Bairro: "Bairro Teste",
+            CEP: "04200-000",
+            Cidade: "São Paulo",
+            Estado: "SP",
+            _id: "1"
+          }
+        ]
+      }
+    ]
   }
 })();
