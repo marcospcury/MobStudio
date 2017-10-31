@@ -7,6 +7,7 @@ module.exports = function(config) {
       "node_modules/bardjs/bard.js",
       "node_modules/angular-mocks/angular-mocks.js",
       "test/test-helpers/*.js",
+      "test/factories/*.js",
       "test/controllers/*.js"
     ],
     browsers: ["PhantomJS"],

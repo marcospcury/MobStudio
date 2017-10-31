@@ -15,7 +15,7 @@ function ServicoDataFactory($http, $location) {
     }
 
     dataFactory.getServico = (id) => {
-        return $http.get(`${urlBase}/${servico._id}`)
+        return $http.get(`${urlBase}/${id}`)
     }
 
     dataFactory.createServico = (servico) => {

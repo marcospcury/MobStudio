@@ -15,7 +15,7 @@ function ClienteDataFactory($http, $location) {
     }
 
     dataFactory.getCliente = (id) => {
-        return $http.get(`${urlBase}/${cliente._id}`)
+        return $http.get(`${urlBase}/${id}`)
     }
 
     dataFactory.createCliente = (cliente) => {

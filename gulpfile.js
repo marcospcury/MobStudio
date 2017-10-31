@@ -16,7 +16,7 @@ gulp.task('default', () => {
 })
 
 gulp.task('test.auto', () => {
-  sequence('app.test', 'test.auto')
+  sequence('app.test', 'test.watch')
 })
 
 gulp.task('test.travis', () => {

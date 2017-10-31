@@ -15,7 +15,7 @@ function ProdutoDataFactory($http, $location) {
     }
 
     dataFactory.getProduto = (id) => {
-        return $http.get(`${urlBase}/${produto._id}`)
+        return $http.get(`${urlBase}/${id}`)
     }
 
     dataFactory.createProduto = (produto) => {

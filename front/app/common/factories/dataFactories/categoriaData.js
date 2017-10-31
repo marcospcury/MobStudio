@@ -20,7 +20,7 @@ function CategoriaDataFactory($http, $location) {
     }
 
     dataFactory.getCategoria = (id) => {
-        return $http.get(`${urlBase}/${categoria._id}`)
+        return $http.get(`${urlBase}/${id}`)
     }
 
     dataFactory.createCategoria = (categoria) => {

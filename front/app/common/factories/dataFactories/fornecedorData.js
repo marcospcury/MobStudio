@@ -15,7 +15,7 @@ function FornecedorDataFactory($http, $location) {
     }
 
     dataFactory.getFornecedor = (id) => {
-        return $http.get(`${urlBase}/${fornecedor._id}`)
+        return $http.get(`${urlBase}/${id}`)
     }
 
     dataFactory.createFornecedor = (fornecedor) => {

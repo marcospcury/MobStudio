@@ -11,7 +11,7 @@ gulp.task("test.front", done => {
   ).start();
 });
 
-gulp.task("test.auto", done => {
+gulp.task("test.watch", done => {
   new Server(
     {
       configFile: __dirname + "/karma.conf.js",
